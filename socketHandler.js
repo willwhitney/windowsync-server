@@ -1,7 +1,7 @@
 (function() {
   var guidGenerator, handleSocket, redclient, redis;
   redis = require("redis");
-  redclient = redis.createClient("6379", "18.62.31.130");
+  redclient = redis.createClient("6379", "18.24.1.101");
   redclient.on("error", function(err) {
     return console.log("redis error: " + err);
   });
