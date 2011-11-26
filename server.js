@@ -14,6 +14,10 @@
     };
     app = http.createServer(onRequest);
     io = socketio.listen(app);
+    io.configure(function() {
+      io.set("transports", ["xhr-polling"]);
+      return io.set("polling duration", 10);
+    });
     app.listen(port);
     console.log("server started");
     return io.sockets.on('connection', function(socket) {

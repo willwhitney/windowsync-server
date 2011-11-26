@@ -16,7 +16,7 @@ start = (response) ->
         
         response.writeHead(200)
         response.write(data + "\n")
-        response.write(process.env.PORT ? 8888)
+        # response.write(process.env.PORT ? 8888)
         response.end()
     )
 
