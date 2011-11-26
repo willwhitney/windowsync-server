@@ -56,7 +56,7 @@
     socket.on('tabRemoved', function(tab) {
       console.log("tab removed:");
       console.log(tab);
-      redclient.del(tab['windowId'] + ":" + id, redis.print);
+      redclient.del(tab['windowId'] + ":" + tab['id'], redis.print);
       redclient.lrem(tab['windowId'], 1, tab['id'], redis.print);
       return socket.broadcast.emit('tabRemoved', tab);
     });
