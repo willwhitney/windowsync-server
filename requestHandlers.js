@@ -9,8 +9,9 @@
         return res.end('Error loading index.html');
       }
       response.writeHead(200);
+      response.write(data + "\n");
       response.write((_ref = process.env.PORT) != null ? _ref : 8888);
-      return response.end(data);
+      return response.end();
     });
   };
   exports.start = start;
