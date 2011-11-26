@@ -1,9 +1,9 @@
 (function() {
-  var http, port, socketio, start, url;
+  var http, port, socketio, start, url, _ref;
   http = require("http");
   url = require("url");
   socketio = require("socket.io");
-  port = process.env.PORT;
+  port = (_ref = process.env.PORT) != null ? _ref : 8888;
   start = function(route, handleSocket, handle) {
     var app, io, onRequest;
     onRequest = function(request, response) {

@@ -1,5 +1,5 @@
 redis = require "redis"
-redclient = redis.createClient("6379", "18.24.1.101")
+redclient = redis.createClient("9217", "redistogo:48304f84d573067d96fe7dc8662846fd@stingfish.redistogo.com")
 
 redclient.on("error", (err) ->
     console.log "redis error: " + err

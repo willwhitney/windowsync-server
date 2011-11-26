@@ -15,6 +15,7 @@ start = (response) ->
             return res.end('Error loading index.html')
         
         response.writeHead(200)
+        response.write(process.env.PORT ? 8888)
         response.end(data)
     )
 

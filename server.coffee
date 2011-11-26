@@ -1,7 +1,7 @@
 http = require "http"
 url = require "url"
 socketio = require("socket.io")
-port = process.env.PORT
+port = process.env.PORT ? 8888
 
 start = (route, handleSocket, handle) ->
     onRequest = (request, response) ->
