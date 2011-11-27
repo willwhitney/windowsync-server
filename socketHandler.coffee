@@ -44,6 +44,7 @@ handleSocket = (socket) ->
     # socket.emit('news', { hello: 'world' })
     
     socket.on('makeWindowId', () ->
+        console.log "made new windowId"
         socket.emit('windowId', {'windowId': guidGenerator() } )
     )
     
@@ -51,8 +52,15 @@ handleSocket = (socket) ->
         
         console.log "tab added:"
         console.log tab
+        console.log "other tabs:"
+        redclient.lrange(tab['windowId'], 0, 10000, (err, res) ->
+            console.log res
+        )
+
 
         id = tab['id']
+        
+        
         
         redclient.set(tab['windowId'] + ":" + id, JSON.stringify(tab), redis.print)
         console.log "tab index: #{tab['index']}"
@@ -66,7 +74,7 @@ handleSocket = (socket) ->
                 redclient.rpush(tab['windowId'], id, redis.print)
         )
         
-        redclient.lrange(tab['windowId'], 0, 10000, redis.print)
+        
         
         # redclient.zadd(WINDOWID, tab['index'], tab['id'], redis.print)
             
@@ -131,8 +139,7 @@ handleSocket = (socket) ->
             for key of res
                 console.log "tab id: " + res[key]
                 redclient.get(windowId + ":" + res[key], (err2, res2) ->
-                    console.log "tab data: " 
-                    console.log res2
+                    console.log "tab data: " + res2
                     socket.emit('tabAdded', res2)
                 )
         )

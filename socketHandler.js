@@ -25,6 +25,7 @@
   */
   handleSocket = function(socket) {
     socket.on('makeWindowId', function() {
+      console.log("made new windowId");
       return socket.emit('windowId', {
         'windowId': guidGenerator()
       });
@@ -33,6 +34,10 @@
       var id;
       console.log("tab added:");
       console.log(tab);
+      console.log("other tabs:");
+      redclient.lrange(tab['windowId'], 0, 10000, function(err, res) {
+        return console.log(res);
+      });
       id = tab['id'];
       redclient.set(tab['windowId'] + ":" + id, JSON.stringify(tab), redis.print);
       console.log("tab index: " + tab['index']);
@@ -46,7 +51,6 @@
           return redclient.rpush(tab['windowId'], id, redis.print);
         }
       });
-      redclient.lrange(tab['windowId'], 0, 10000, redis.print);
       socket.emit('tabId', {
         clientId: tab['id'],
         serverId: id
@@ -93,8 +97,7 @@
         for (key in res) {
           console.log("tab id: " + res[key]);
           _results.push(redclient.get(windowId + ":" + res[key], function(err2, res2) {
-            console.log("tab data: ");
-            console.log(res2);
+            console.log("tab data: " + res2);
             return socket.emit('tabAdded', res2);
           }));
         }
