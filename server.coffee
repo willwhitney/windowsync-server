@@ -13,7 +13,7 @@ start = (route, handleSocket, handle) ->
     app = http.createServer(onRequest)
     io = socketio.listen(app)
     io.configure( () -> 
-        io.set("transports", ["xhr-polling"])
+        io.set("transports", ["flashsocket", "xhr-polling"])
         io.set("polling duration", 10)
     )
     app.listen(port)
