@@ -15,7 +15,7 @@
     app = http.createServer(onRequest);
     io = socketio.listen(app);
     io.configure(function() {
-      io.set("transports", ["jsonp-polling", "xhr-polling"]);
+      io.set("transports", ["xhr-polling"]);
       return io.set("polling duration", 10);
     });
     app.listen(port);
