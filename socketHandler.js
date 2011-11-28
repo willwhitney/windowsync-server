@@ -39,7 +39,12 @@
         return console.log(res);
       });
       id = tab['id'];
-      redclient.set(tab['windowId'] + ":" + id, JSON.stringify(tab), redis.print);
+      redclient.get(tab['windowId'] + ":" + id, function(err, res) {
+        if (res != null) {
+          id = guidGenerator();
+        }
+        return redclient.set(tab['windowId'] + ":" + id, JSON.stringify(tab), redis.print);
+      });
       console.log("tab index: " + tab['index']);
       redclient.lindex(tab['windowId'], tab['index'], function(error, result) {
         console.log("currently at that index: " + result);
@@ -53,7 +58,8 @@
       });
       socket.emit('tabId', {
         clientId: tab['id'],
-        serverId: id
+        serverId: id,
+        windowId: tab['windowId']
       });
       return socket.broadcast.emit('tabAdded', tab);
     });
@@ -75,6 +81,7 @@
       console.log("tab moved:");
       console.log(tab);
       id = tab['id'];
+      delete tab['oldIndex'];
       redclient.set(tab['windowId'] + ":" + tab['id'], JSON.stringify(tab), redis.print);
       redclient.lrem(tab['windowId'], 1, tab['id'], redis.print);
       redclient.lindex(tab['windowId'], tab['index'], function(error, result) {

@@ -59,10 +59,12 @@ handleSocket = (socket) ->
 
 
         id = tab['id']
+        redclient.get(tab['windowId'] + ":" + id, (err, res) ->
+            if res?
+                id = guidGenerator()
+            redclient.set(tab['windowId'] + ":" + id, JSON.stringify(tab), redis.print)
+        )
         
-        
-        
-        redclient.set(tab['windowId'] + ":" + id, JSON.stringify(tab), redis.print)
         console.log "tab index: #{tab['index']}"
         redclient.lindex(tab['windowId'], tab['index'], (error, result) ->
             console.log "currently at that index: #{result}"
@@ -78,7 +80,7 @@ handleSocket = (socket) ->
         
         # redclient.zadd(WINDOWID, tab['index'], tab['id'], redis.print)
             
-        socket.emit('tabId', {clientId: tab['id'], serverId: id })
+        socket.emit('tabId', {clientId: tab['id'], serverId: id, windowId: tab['windowId'] })
         socket.broadcast.emit('tabAdded', tab)        
         # for key of data
         #     redclient.set(key, data[key], redis.print)
@@ -114,6 +116,8 @@ handleSocket = (socket) ->
         console.log tab
         
         id = tab['id']
+        
+        delete tab['oldIndex']
         
         redclient.set(tab['windowId'] + ":" + tab['id'], JSON.stringify(tab), redis.print)
                 
