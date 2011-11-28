@@ -14,7 +14,7 @@ start = (route, handleSocket, handle) ->
     io = socketio.listen(app)
     io.configure( () -> 
         io.set("transports", ["xhr-polling"])
-        io.set("polling duration", 10)
+        io.set("polling duration", 5)
     )
     app.listen(port)
     console.log "server started"
