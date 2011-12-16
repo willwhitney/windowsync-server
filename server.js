@@ -3,7 +3,7 @@
   http = require("http");
   url = require("url");
   socketio = require("socket.io");
-  port = (_ref = process.env.PORT) != null ? _ref : 8888;
+  port = (_ref = process.env.PORT) != null ? _ref : 12966;
   start = function(route, handleSocket, handle) {
     var app, io, onRequest;
     onRequest = function(request, response) {
