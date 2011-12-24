@@ -1,7 +1,7 @@
 http = require "http"
 url = require "url"
 socketio = require("socket.io")
-port = 80
+port = 13207
 
 start = (route, handleSocket, handle) ->
     onRequest = (request, response) ->
